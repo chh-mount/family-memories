@@ -10,7 +10,7 @@
             --primary-color: #4a90e2;
             --secondary-color: #f5f5f5;
             --text-color: #333;
-            --border-color: #ddd;
+            --accent-color: #e74c3c;
         }
 
         * {
@@ -32,121 +32,217 @@
             padding: 20px;
         }
 
-        .header {
-            text-align: center;
-            margin: 40px 0;
+        header {
+            background-color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
         }
 
-        .header h1 {
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
             color: var(--primary-color);
-            font-size: 2.5em;
-            margin-bottom: 10px;
         }
 
-        .header p {
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .nav-links a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .hero h2 {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
             color: #666;
-            font-size: 1.2em;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #357abd;
         }
 
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            margin-top: 40px;
+            margin-bottom: 40px;
         }
 
         .feature-card {
-            background: white;
-            border-radius: 15px;
+            background-color: white;
             padding: 30px;
+            border-radius: 10px;
             text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
         }
 
-        .feature-icon {
-            font-size: 2.5em;
+        .feature-card i {
+            font-size: 40px;
             color: var(--primary-color);
             margin-bottom: 20px;
         }
 
-        .feature-title {
-            font-size: 1.5em;
-            color: var(--text-color);
+        .feature-card h3 {
+            font-size: 24px;
             margin-bottom: 15px;
+            color: var(--text-color);
         }
 
-        .feature-description {
+        .feature-card p {
             color: #666;
-            margin-bottom: 20px;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #357abd;
+        footer {
+            background-color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
+            .header-content {
+                flex-direction: column;
+                text-align: center;
             }
 
-            .header {
-                margin: 20px 0;
+            .logo {
+                margin-bottom: 20px;
             }
 
-            .header h1 {
-                font-size: 2em;
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
             }
 
-            .features {
-                grid-template-columns: 1fr;
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero h2 {
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>家庭回忆录</h1>
-            <p>记录美好时光，珍藏温馨回忆</p>
-        </div>
-
-        <div class="features">
-            <div class="feature-card">
-                <i class="fas fa-images feature-icon"></i>
-                <h2 class="feature-title">照片管理</h2>
-                <p class="feature-description">轻松上传和管理家庭照片，创建精美的相册集</p>
-                <a href="gallery.html" class="btn">浏览相册</a>
-            </div>
-
-            <div class="feature-card">
-                <i class="fas fa-users feature-icon"></i>
-                <h2 class="feature-title">家庭成员</h2>
-                <p class="feature-description">记录每个家庭成员的信息和故事</p>
-                <a href="members.html" class="btn">查看成员</a>
-            </div>
-
-            <div class="feature-card">
-                <i class="fas fa-calendar-alt feature-icon"></i>
-                <h2 class="feature-title">重要时刻</h2>
-                <p class="feature-description">记录和分享家庭中的重要时刻和纪念日</p>
-                <a href="events.html" class="btn">查看时刻</a>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/family-memories/" class="logo">
+                    <img src="/family-memories/images/logo.png" alt="Logo">
+                    <h1>家庭回忆录</h1>
+                </a>
+                <nav class="nav-links">
+                    <a href="/family-memories/" class="active">首页</a>
+                    <a href="/family-memories/members.html">家庭成员</a>
+                    <a href="/family-memories/photos.html">照片管理</a>
+                    <a href="/family-memories/list.html">回忆列表</a>
+                    <a href="/family-memories/add.html">添加回忆</a>
+                </nav>
             </div>
         </div>
-    </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h2>记录美好时刻</h2>
+            <p>用照片和文字记录家庭的每一个重要时刻，让回忆永远保存。</p>
+            <a href="/family-memories/add.html" class="cta-button">开始记录</a>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-users"></i>
+                <h3>家庭成员</h3>
+                <p>记录每个家庭成员的信息，包括生日、角色和描述。</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-images"></i>
+                <h3>照片管理</h3>
+                <p>上传和管理家庭照片，支持多张图片展示。</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>时间轴</h3>
+                <p>按时间顺序展示所有回忆，轻松回顾美好时光。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 家庭回忆录. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html> 
