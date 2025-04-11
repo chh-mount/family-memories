@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑家庭成员 - 家庭回忆录</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5f5f5;
+            --text-color: #333;
+            --error-color: #e74c3c;
+            --success-color: #2ecc71;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--secondary-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .avatar-preview {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 1rem 0;
+            border: 3px solid var(--primary-color);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #357abd;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem auto;
+            }
+
+            .form-container {
+                padding: 1rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>编辑家庭成员</h1>
+        </div>
+
+        <div class="form-container">
+            <form id="editMemberForm">
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" id="name" name="name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">角色</label>
+                    <input type="text" id="role" name="role" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="birthday">生日</label>
+                    <input type="date" id="birthday" name="birthday" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">描述</label>
+                    <textarea id="description" name="description" class="form-control" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="avatar">头像</label>
+                    <input type="file" id="avatar" name="avatar" class="form-control" accept="image/*">
+                    <img id="avatarPreview" class="avatar-preview" src="images/default-avatar.jpg" alt="头像预览">
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='members.html'">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script>
+        let currentMemberId = null;
+
+        // 获取URL参数中的成员ID
+        function getMemberIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // 加载成员信息
+        function loadMemberData() {
+            const memberId = getMemberIdFromUrl();
+            if (!memberId) {
+                alert('未找到成员ID');
+                window.location.href = 'members.html';
+                return;
+            }
+
+            currentMemberId = memberId;
+            const member = DataStore.getMember(memberId);
+            
+            if (!member) {
+                alert('未找到成员信息');
+                window.location.href = 'members.html';
+                return;
+            }
+
+            // 填充表单
+            document.getElementById('name').value = member.name;
+            document.getElementById('role').value = member.role;
+            document.getElementById('birthday').value = member.birthday;
+            document.getElementById('description').value = member.description;
+            
+            if (member.avatar) {
+                document.getElementById('avatarPreview').src = member.avatar;
+            }
+        }
+
+        // 预览头像
+        document.getElementById('avatar').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('avatarPreview').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 处理表单提交
+        document.getElementById('editMemberForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = {
+                id: currentMemberId,
+                name: document.getElementById('name').value,
+                role: document.getElementById('role').value,
+                birthday: document.getElementById('birthday').value,
+                description: document.getElementById('description').value,
+                avatar: document.getElementById('avatarPreview').src
+            };
+
+            DataStore.updateMember(formData);
+            window.location.href = 'members.html';
+        });
+
+        // 页面加载时加载成员数据
+        document.addEventListener('DOMContentLoaded', loadMemberData);
+    </script>
+</body>
+</html> 
